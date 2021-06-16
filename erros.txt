@@ -1,0 +1,36 @@
+ERRO 1: ao tentar dar um POST somente no telefone, não recebo nenhum erro no terminal e recebo o seguinte erro no Postman:
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Error</title>
+</head>
+
+<body>
+	<pre>Cannot POST /clientes/2/telefones</pre>
+</body>
+
+</html>
+
+
+
+
+
+ERRO 2: ao tentar dar um DELETE, recebo um erro no terminal que, aparentemente, não posso deletar o usuário porque ele tem um telefone vinculado a ele. No exemplo da aula, o usuário deletado não tinha número de telefone vinculado. Como resolver isto?
+
+(node:4100) UnhandledPromiseRejectionWarning: QueryFailedError: Cannot delete or update a parent row: a foreign key constraint fails (`aula_db_mod15`.`tab_cliente_telefone`, CONSTRAINT `fk_telefone_cliente` FOREIGN KEY (`cliente_id`) REFERENCES `tab_cliente` (`id`))
+    at new QueryFailedError (D:\Google_Drive\Marcos_Moreira\Estudos\Programação\Gama_Experience\Aulas\Banco_de_Dados\aula_db_mod15\src\error\QueryFailedError.ts:11:9)
+    at Query.onResult (D:\Google_Drive\Marcos_Moreira\Estudos\Programação\Gama_Experience\Aulas\Banco_de_Dados\aula_db_mod15\src\driver\mysql\MysqlQueryRunner.ts:193:37)
+    at Query.execute (D:\Google_Drive\Marcos_Moreira\Estudos\Programação\Gama_Experience\Aulas\Banco_de_Dados\aula_db_mod15\node_modules\mysql2\lib\commands\command.js:30:14)
+    at PoolConnection.handlePacket (D:\Google_Drive\Marcos_Moreira\Estudos\Programação\Gama_Experience\Aulas\Banco_de_Dados\aula_db_mod15\node_modules\mysql2\lib\connection.js:425:32)
+    at PacketParser.onPacket (D:\Google_Drive\Marcos_Moreira\Estudos\Programação\Gama_Experience\Aulas\Banco_de_Dados\aula_db_mod15\node_modules\mysql2\lib\connection.js:75:12)
+    at PacketParser.executeStart (D:\Google_Drive\Marcos_Moreira\Estudos\Programação\Gama_Experience\Aulas\Banco_de_Dados\aula_db_mod15\node_modules\mysql2\lib\packet_parser.js:75:16)
+    at Socket.<anonymous> (D:\Google_Drive\Marcos_Moreira\Estudos\Programação\Gama_Experience\Aulas\Banco_de_Dados\aula_db_mod15\node_modules\mysql2\lib\connection.js:82:25)
+    at Socket.emit (events.js:376:20)
+    at addChunk (internal/streams/readable.js:309:12)
+    at readableAddChunk (internal/streams/readable.js:284:9)
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:4100) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 1)
+(node:4100) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.

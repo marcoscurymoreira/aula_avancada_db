@@ -1,6 +1,7 @@
 //gerenciar as regras de negócio da aplicação.
 import { Request, Response } from 'express';
-import { getCustomRepository } from 'typeorm';
+import { getConnection, getCustomRepository } from 'typeorm';
+import { Cliente } from '../entities/Cliente';
 import { ClienteTelefone } from '../entities/ClienteTelefone';
 import { ClienteRepository } from "../repositories/ClienteRepository";
 
@@ -25,7 +26,7 @@ class ClienteController {
 
         const repository = getCustomRepository(ClienteRepository);
         await repository.update(id, cliente);
-        return res.status(200).json({ data: "Dados alterados para " + cliente.cpfCnpj + "e" + cliente.nome });
+        return res.status(200).json({ data: "Dados alterados com sucesso" });
     }
 
     async list(req: Request, res: Response) {
@@ -41,6 +42,19 @@ class ClienteController {
         return res.status(200).json(data);
     }
 
+    async listCity(req: Request, res: Response) {//buscando pela cidade.
+
+        const { nome } = req.params;
+
+        const data = await getConnection()//obtendo uma connection...
+            .getRepository(Cliente)//da entidade cliente...
+            .createQueryBuilder("cliente").innerJoin("cliente.endereco", "endereco")//fazendo um join do cliente com endereco...
+            .where("endereco.cidade = :nome", { nome: nome })//na posicao cidade e vai obter um parâmetro "nome".
+            .getMany();
+
+        return res.status(200).json({ data: data });
+    }
+
     async delete(req: Request, res: Response) {
         const { id } = req.params;
         const repository = getCustomRepository(ClienteRepository);
@@ -51,7 +65,7 @@ class ClienteController {
     async addTel(req: Request, res: Response) {
         const { id } = req.params;
         const { ddd, numero, tipo } = req.body;
-        
+
 
         const repository = getCustomRepository(ClienteRepository);
         const cliente = await repository.findOne(id);
@@ -63,11 +77,7 @@ class ClienteController {
         telefone.tipo = tipo;
         telefone.cliente = cliente;
 
-        console.log(telefone);
         cliente.telefones.push(telefone);
-
-        console.log(cliente);
-
 
         await repository.save(cliente);
 

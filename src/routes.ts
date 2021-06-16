@@ -19,6 +19,7 @@ routes.post('clientes/:id/telefones', clienteController.addTel);
 routes.put('/clientes/:id', clienteController.update);
 routes.get('/clientes', clienteController.list);
 routes.get('/clientes/:id', clienteController.find);
+routes.get('/clientes/cidades/:nome', clienteController.listCity)
 routes.delete('/clientes/:id', clienteController.delete);
 
 
